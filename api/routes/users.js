@@ -43,7 +43,9 @@ router.post('/signup', (req, res, next) => {
         }
         else{
             bcrypt.hash(req.body.password, 10, (err, hash) => {
+                console.log(req.body.password)
                 if(err){
+                    console.log(err);
                     return res.status(500).json({
                         error: err
                     });
@@ -59,7 +61,7 @@ router.post('/signup', (req, res, next) => {
                     .save()
                     .then(result => {
                         res.status(201).json({
-                            message: 'Auth failed'
+                            message: 'User saved'
                         });
                     })
                     .catch(err => {
@@ -96,7 +98,7 @@ router.post("/login", (req, res, next) => {
                     userId: user[0]._id
                 }, process.env.JWT_KEY,
                 {
-                    expiresIn: "1h"
+                    expiresIn: "2h"
                 })
                 return res.status(200).json({
                     message: 'Auth successful',
